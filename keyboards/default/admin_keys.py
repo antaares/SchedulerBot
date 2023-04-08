@@ -10,3 +10,13 @@ admin = ReplyKeyboardMarkup(
     ],
     resize_keyboard=True
 )
+
+
+ready = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text="Tayyor"),
+        ],
+    ],
+    resize_keyboard=True
+)

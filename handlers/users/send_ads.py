@@ -2,6 +2,8 @@ import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram import types
 
+from typing import List
+
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 
@@ -16,19 +18,20 @@ async def start_service(data):
         scheduler.remove_job("id4556")
     except Exception as e:
         pass
-    scheduler.add_job(service, trigger= 'interval', minutes=30, id="id4556", max_instances=20, args=[data])
+    scheduler.add_job(service, trigger= 'interval', minutes=1, id="id4556", max_instances=20, args=[data])
     try:
         scheduler.start()
     except Exception as e:
         pass
 
 
-async def service(message: types.Message):
+async def service(messages: List[types.Message]):
     allgroups = db.select_all_groups()
     for group in allgroups:
         try:
-            await message.copy_to(group, reply_markup=message.reply_markup)
-            await asyncio.sleep(0.3)
+            for message in messages:
+                await message.copy_to(group, reply_markup=message.reply_markup)
+                await asyncio.sleep(0.3)
         except Exception as e:
             print(e)
 
