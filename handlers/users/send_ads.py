@@ -18,7 +18,7 @@ async def start_service(data):
         scheduler.remove_job("id4556")
     except Exception as e:
         pass
-    scheduler.add_job(service, trigger= 'interval', minutes=1, id="id4556", max_instances=20, args=[data])
+    scheduler.add_job(service, trigger= 'interval', minutes=20, id="id4556", max_instances=20, args=[data])
     try:
         scheduler.start()
     except Exception as e:
